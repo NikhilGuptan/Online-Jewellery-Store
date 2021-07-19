@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body{
+            background-color: teal;
+        }
+        h4{
+            margin-bottom: 0%;
+
+        }
+        #info{
+            background-color: yellow;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+        #infomation{
+            margin: auto;
+            width: 15%;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            /* height: 200px; */
+            /* border: 1px solid black; */
+            background-color: white;
+            margin-top: 100px;
+        }
+        .placed{
+            width: 25%;
+            text-align: center;
+            margin: auto;
+            height: 150px;
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: blue;
+            color: white;
+            margin-top: 200px;
+        }
+        button{
+            border-radius: 5px;
+            margin-top: 10px;
+            background-color: red;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        input{
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+    
+    <h1 id="info">You can payment here</h1>
+    <div id="infomation">
+        <h4>Enter Your Name</h4>
+        <input type="text" name="" id="name" placeholder="Enter your Full Name">
+        <h4>Enter Card Number</h4>
+        <input type="number" name="" id="number" placeholder="Enter You Card No">
+        <h4>Enter your password</h4>
+        <input type="password" name="" id="password" placeholder="Enter Your Password">
+        <button onclick="placeOrder()">Place Order</button>
+
+    </div>
+</body>
+
+    <script>
+
+        function placeOrder(){
+
+            var name = document.getElementById("name").value;
+            var number = document.getElementById("number").value;
+            var password = document.getElementById("password").value;
+
+            if(name=="" || number=="" || password==""){
+                alert("Enter Full Detail")
+            }else{
+
+                setTimeout(function(){
+
+                    document.body.innerHTML = "";
+                    var div = document.createElement("div");
+                    div.setAttribute("class","placed")
+
+                    var h1 = document.createElement("h1");
+                    h1.innerHTML = "Your order is successfully placed thanks for purchasing.";
+
+                    div.append(h1);
+
+                    document.body.append(div);
+
+
+                },3000)
+
+            }
+
+        }
+
+    </script>
+
+</html>

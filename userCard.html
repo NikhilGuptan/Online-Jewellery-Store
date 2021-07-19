@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UserCard</title>
+    <style>
+
+        img{
+            width: 70%;
+        }
+        #data{
+            display: grid;
+            grid-template-columns: repeat(4,20%);
+            grid-gap:5%;
+        }
+        .childDiv{
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .childDivP{
+            padding-top: 0%;
+            padding-bottom: 0%;
+            margin-top: 0%;
+            margin-bottom: 0%;
+        }
+        .childDivprice{
+          padding-top: 0%;
+          padding-bottom: 0%; 
+          margin-top: 0%;
+            margin-bottom: 0%; 
+        }
+        #items{
+            float: right;
+            /* border: 1px solid black; */
+        }
+        #itemTotal{
+            width: 200px;
+            height: 40px;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: chartreuse;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            
+            
+        }
+        #promoCode{
+            /* float: right; */
+            width: 200px;
+            height: 40px;
+            border-radius: 10px;
+            border-color:  brown;
+            margin-top: 10px;
+        }
+        
+        #promo{
+          width: 200px;
+            height: 40px;
+            border: 1px solid black;
+            /* float: right; */
+            border-radius: 10px;
+            background-color: red;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;  
+        }
+        #checkout{
+            width: 200px;
+            height: 80px;
+            border: 1px solid black;
+            /* float: right; */
+            border-radius: 10px;
+            background-color: red;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            /* margin-top: 50px; */
+            /* float: right; */
+            margin-bottom: 50px;
+            margin-left: 300px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1 style="float: left; background-color: yellowgreen;">Your selected items</h1>
+        <button id="checkout" onclick="checkOut()">Checkout For Payment</button>
+    </div>
+    <div id="items">
+        <div id="itemTotal"></div>
+        <input type="text" name="" id="promoCode" placeholder="use promo code"><br>
+        <button id="promo" onclick="applyPromo()">Apply Promo</button><br>
+    
+    </div>
+    
+    <div id="data"></div>
+    
+</body>
+
+<script>
+
+    var expense = document.getElementById("itemTotal");
+    var total = 0;
+
+    function appendLocations(el) {
+    
+        var data_div = document.getElementById("data");
+
+        var div = document.createElement("div");
+        div.setAttribute("class","childDiv")
+
+        var p_name = document.createElement("p");
+        p_name.setAttribute("class","childDivP")
+
+        p_name.innerHTML = el.name;
+
+        var p_price = document.createElement("p");
+        p_price.setAttribute("class","childDivprice")
+
+        p_price.innerHTML = `Price:${el.price}rc`;
+        total += +(el.price);
+
+        let img = document.createElement("img");
+
+        img.src = el.image;
+ 
+        div.append(p_name, p_price, img);
+
+        data_div.append(div);
+    }
+
+    function showCard() {
+    
+        let data = JSON.parse(localStorage.getItem('userCard'))
+
+        data.forEach(function (el) {
+            appendLocations(el);
+        })
+        
+    }
+
+    showCard();
+    expense.innerHTML = `Total:${total}rc`;
+
+    function applyPromo(){
+
+        var promocode = document.getElementById("promoCode").value;
+
+        if(promocode=="masai30"){
+
+            var discount = (total/100)*30;
+            expense.innerHTML = `Total:${total - discount}rc`;
+        }else{
+            alert("wrong promo code")
+        }
+
+    }
+
+    function checkOut(){
+
+        window.location.href = 'payment.html'
+
+    }
+
+
+</script>  
+
+</html>

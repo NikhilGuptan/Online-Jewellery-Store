@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Jewellery Store</title>
+</head>
+<style>
+
+    img{
+            width: 70%;
+        }
+        img:hover{
+            content: url("http://www.udaipurblog.com/wp-content/uploads/2018/12/My-Gold-Guide-600x410.jpg");
+        }
+        #data{
+            display: grid;
+            grid-template-columns: repeat(4,20%);
+            grid-gap:5%;
+        }
+        .childDiv{
+            text-align: center;
+            font-size: 18px;
+            border-radius: 5px;
+        }
+        .childDivP{
+            padding-top: 0%;
+            padding-bottom: 0%;
+            margin-top: 0%;
+            margin-bottom: 0%;
+        }
+        .childDivprice{
+          padding-top: 0%;
+          padding-bottom: 0%; 
+          margin-top: 0%;
+            margin-bottom: 0%; 
+        }
+        .childDivButton{
+            margin: auto;
+            width: 150px;
+            height: 35px;
+            border-radius: 10px;
+            background-color: red;
+            color: white;
+            font-weight: bold;
+        }
+        #userCard{
+            float: right;
+            width: 150px;
+            height: 35px;
+            border-radius: 10px;
+            background-color: yellowgreen;
+        }
+        #addProduct{
+            margin-top: 10px;
+            width: 150px;
+            height: 35px;
+            border-radius: 10px;
+            background-color: teal;
+            color: white;
+            font-weight: bold;
+
+        }
+
+</style>
+<body>
+    <h1 style="background-color: yellowgreen; padding: 10px;">Jewellery Store</h1>
+    <h2>Add New Products:</h2>
+    <form id="myform">
+        <input type="text" id="name" placeholder="Name">
+        <input type="number" id="price" placeholder="Price">
+        <input type="text" id="img" placeholder="Image">
+    </form>
+    <button id="userCard" onclick="showCard()">User Card</button>
+    
+    <button onclick="storeLocation()" id="addProduct">Add new Product</button>
+    <button onclick="sortLH()" id="addProduct">Sort By Low To High</button>
+    <button onclick="sortHL()" id="addProduct">Sort By High To Low</button>
+    <div id="data"></div>
+
+</body>
+
+<script>
+
+    
+
+
+function storeLocation() {
+    
+    //let form = document.getElementById("myForm")
+
+    let name = document.getElementById("name").value;
+    let price = document.getElementById("price").value;
+    let image = document.getElementById("img").value;
+
+    let Jewellery= {
+         name:name,
+         price:price,
+        image:image
+    }
+
+    let arr;
+    arr = localStorage.getItem('Jewellery');
+
+    if (arr == null) {
+        arr = [];
+    } else {
+        
+        arr=JSON.parse(localStorage.getItem('Jewellery'))
+    }
+
+    arr.push(Jewellery)
+
+    localStorage.setItem('Jewellery',JSON.stringify(arr))
+}
+
+function appendLocations(el) {
+    
+    var data_div = document.getElementById("data");
+    
+
+    var div = document.createElement("div");
+    div.setAttribute("class","childDiv")
+
+    var p_name = document.createElement("p");
+    p_name.setAttribute("class","childDivP")
+
+    p_name.innerHTML = el.name;
+
+    var p_price = document.createElement("p");
+    p_price.setAttribute("class","childDivprice")
+
+    p_price.innerHTML = `Price:${el.price}rc`;
+
+    let img = document.createElement("img");
+
+    img.src = el.image;
+    
+
+    let btn = document.createElement("button")
+    btn.textContent = "Add To Card"
+    btn.setAttribute("class","childDivButton")
+
+    btn.addEventListener("click",function(){
+        addToCard(el);
+    })
+
+    btn.style.display = "block"
+
+
+    div.append(p_name, p_price, img, btn);
+
+    data_div.append(div);
+}
+
+function showLocations(j) {
+    
+    // let data = JSON.parse(localStorage.getItem('Jewellery'))
+
+    j.forEach(function (el) {
+        appendLocations(el);
+    })
+    
+}
+
+showLocations(JSON.parse(localStorage.getItem("Jewellery")));
+
+
+    
+
+function sortLH(){
+
+       let Jewellery = JSON.parse(localStorage.getItem("Jewellery"));
+       
+       Jewellery = Jewellery.sort(function(a,b){
+
+        return a.price - b.price;
+
+       })
+
+       var data_div = document.getElementById("data");
+       data_div.innerHTML = null;
+       
+       showLocations(Jewellery);
+
+    }
+
+    function sortHL(){
+
+       let Jewellery = JSON.parse(localStorage.getItem("Jewellery"));
+       
+       Jewellery = Jewellery.sort(function(a,b){
+
+        return b.price - a.price;
+
+       })
+       
+       var data_div = document.getElementById("data");
+        data_div.innerHTML = null;
+
+       showLocations(Jewellery);
+
+    }
+
+    
+
+    function addToCard(obj){
+ 
+    let arr;
+    arr = localStorage.getItem('userCard');
+
+    if (arr == null) {
+        arr = [];
+    } else {
+
+        arr = JSON.parse(localStorage.getItem('userCard'))
+    }
+
+    arr.push(obj)
+
+    localStorage.setItem('userCard', JSON.stringify(arr))
+}
+
+    function showCard() {
+
+        window.location.href = 'userCard.html';
+
+    }
+
+
+</script>
+</html>
